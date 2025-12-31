@@ -1,0 +1,28 @@
+import Image from 'next/image'
+import Link from 'next/link'
+import React from 'react'
+import SearchBar from './SearchBar'
+
+const NavBar = () => {
+    return (
+        <nav className='w-full flex items-center justify-between border-b border-gray-200 pb-4'>
+            {/* LEFT */}
+            <Link href='/' className='flex items-center'>
+                <Image
+                    src='/logo.png'
+                    alt='HUA-E-Commerce Web Application'
+                    width={36}
+                    height={36}
+                    className='h-6 w-6 md:h-13 md:w-13'
+                />
+                <p className='hidden md:block'>HUA</p>
+            </Link>
+            {/* RIGHT */}
+            <div className=''>
+                <SearchBar />
+            </div>
+        </nav>
+    )
+}
+export default NavBar
+
