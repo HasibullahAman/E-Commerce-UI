@@ -1,12 +1,24 @@
 "use client";
 
-import { ProductsType } from "@/type";
+import { ProductType } from "@/type";
+import Image from "next/image";
+import Link from "next/link";
 
 
-export const ProductCard = ({ product }: { product: ProductsType }) => {
+const ProductCard = ({ product }: { product: ProductType }) => {
     return (
-        <div>
-            ProductCard
+        <div className="shaadow-lg rounded-lg overflow-hidden">
+            <Link href={`/product/${product.id}`}>
+                <div className="relative aspect-[2/3]">
+                    <Image
+                        src={product.images[product.colors[0]]}
+                        alt={product.name}
+                        fill className="object-cover hover:scale-105 transition-all duration-300"
+                    />
+                </div>
+            </Link>
         </div>
     )
 }
+
+export default ProductCard

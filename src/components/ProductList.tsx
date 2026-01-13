@@ -1,6 +1,6 @@
 import { ProductsType } from "@/type";
 import { Categories } from "./Categories";
-import { ProductCard } from "./ProductCard";
+import ProductCard from "./ProductCard";
 
 
 // Temporary 
@@ -14,9 +14,9 @@ const products: ProductsType = [
         sizes: ["S", "M", "L", "XL", "XXL"],
         colors: ["black", "white", "navy"],
         images: {
-            black: "/products/2/black.png",
-            white: "/products/2/white.png",
-            navy: "/products/2/navy.png",
+            black: "/products/1g.png",
+            white: "/products/1p.png",
+            navy: "/products/1gr.png",
         },
     },
     {
@@ -28,8 +28,8 @@ const products: ProductsType = [
         sizes: ["S", "M", "L", "XL"],
         colors: ["blue", "gray", "white"],
         images: {
-            blue: "/products/3/blue.png",
-            gray: "/products/3/gray.png",
+            blue: "/products/2g.png",
+            gray: "/products/2gr.png",
             white: "/products/3/white.png",
         },
     },
@@ -42,9 +42,9 @@ const products: ProductsType = [
         sizes: ["M", "L", "XL", "XXL"],
         colors: ["black", "olive", "maroon"],
         images: {
-            black: "/products/4/black.png",
-            olive: "/products/4/olive.png",
-            maroon: "/products/4/maroon.png",
+            black: "/products/3b.png",
+            olive: "/products/3bl.png",
+            maroon: "/products/3gr.png",
         },
     },
     {
@@ -56,8 +56,8 @@ const products: ProductsType = [
         sizes: ["S", "M", "L", "XL"],
         colors: ["blue", "darkblue"],
         images: {
-            blue: "/products/5/blue.png",
-            darkblue: "/products/5/darkblue.png",
+            blue: "/products/4p.png",
+            darkblue: "/products/4w.png",
         },
     },
     {
@@ -69,9 +69,9 @@ const products: ProductsType = [
         sizes: ["S", "M", "L", "XL", "XXL"],
         colors: ["beige", "black", "gray"],
         images: {
-            beige: "/products/6/beige.png",
-            black: "/products/6/black.png",
-            gray: "/products/6/gray.png",
+            beige: "/products/5bl.png",
+            black: "/products/5o.png",
+            gray: "/products/5r.png",
         },
     },
     {
@@ -83,9 +83,8 @@ const products: ProductsType = [
         sizes: ["S", "M", "L", "XL"],
         colors: ["red", "black", "neon"],
         images: {
-            red: "/products/7/red.png",
-            black: "/products/7/black.png",
-            neon: "/products/7/neon.png",
+            red: "/products/6g.png",
+            black: "/products/6w.png",
         },
     },
     {
@@ -97,8 +96,8 @@ const products: ProductsType = [
         sizes: ["M", "L", "XL", "XXL"],
         colors: ["white", "skyblue"],
         images: {
-            white: "/products/8/white.png",
-            skyblue: "/products/8/skyblue.png",
+            white: "/products/7g.png",
+            skyblue: "/products/7p.png",
         },
     },
     {
@@ -110,36 +109,8 @@ const products: ProductsType = [
         sizes: ["S", "M", "L", "XL"],
         colors: ["brown", "gray", "cream"],
         images: {
-            brown: "/products/9/brown.png",
-            gray: "/products/9/gray.png",
-            cream: "/products/9/cream.png",
-        },
-    },
-    {
-        id: 9,
-        name: "Relaxed Fit Shorts",
-        shortDescription: "Comfortable summer shorts",
-        description: "Relaxed fit shorts perfect for home, gym, or casual walks.",
-        price: 19.99,
-        sizes: ["S", "M", "L", "XL"],
-        colors: ["black", "gray"],
-        images: {
-            black: "/products/10/black.png",
-            gray: "/products/10/gray.png",
-        },
-    },
-    {
-        id: 11,
-        name: "Lightweight Windbreaker",
-        shortDescription: "Stylish wind protection",
-        description: "Lightweight windbreaker jacket suitable for travel and outdoor use.",
-        price: 69.99,
-        sizes: ["M", "L", "XL", "XXL"],
-        colors: ["green", "black", "blue"],
-        images: {
-            green: "/products/11/green.png",
-            black: "/products/11/black.png",
-            blue: "/products/11/blue.png",
+            brown: "/products/8b.png",
+            gray: "/products/9gr.png",
         },
     },
 ];
@@ -147,17 +118,18 @@ const products: ProductsType = [
 
 
 
-export const ProductList = () => {
+const ProductList = () => {
     return (
         <div className="w-full">
             <Categories />
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-12">
                 {products.map(product => (
-                    <ProductCard key={product.id} product={products} />
+                    <ProductCard key={product.id} product={product} />
                 ))}
             </div>
+
         </div>
     )
 }
 
-
+export default ProductList;
