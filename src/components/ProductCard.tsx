@@ -4,16 +4,29 @@ import { ProductType } from "@/type";
 import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 
 const ProductCard = ({ product }: { product: ProductType }) => {
+
+    // import and use usestate for intreact wiht the card
+    const [productType, setProductType] = useState({
+        size: product.sizes[0],
+        color: product.colors[0],
+    })
+
+    const handleProductType = (
+        { type, value }: { type: "size" | "color", value: string }
+    ) => {
+
+    }
     return (
         <div className="shadow-lg rounded-lg overflow-hidden">
             {/* IMAGE */}
             <Link href={`/product/${product.id}`}>
                 <div className="relative aspect-[2/3]">
                     <Image
-                        src={product.images[product.colors[0]]}
+                        src={product.images[productType.color]}
                         alt={product.name}
                         fill className="object-cover hover:scale-105 transition-all duration-300"
                     />
@@ -38,7 +51,17 @@ const ProductCard = ({ product }: { product: ProductType }) => {
                         <span className=" text-gray-500">
                             Size
                         </span>
-                        <select name="size" id="size" className="ring ring-gray-300 rounded-md px-2 py-1">
+                        <select
+                            name="size"
+                            id="size"
+                            className="ring ring-gray-300 rounded-md px-2 py-1"
+                            onChange={(e) => handleProductType(
+                                {
+                                    type: "size",
+                                    value: e.target.value
+                                }
+                            )}
+                        >
                             {product.sizes.map(size => (
                                 <option value={size}>
                                     {size.toUpperCase()}
@@ -51,9 +74,17 @@ const ProductCard = ({ product }: { product: ProductType }) => {
                         <span className=" text-gray-500">
                             Color
                         </span>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2" >
                             {product.colors.map(color => (
-                                <div key={color} className="">
+                                <div
+                                    key={color}
+                                    className={`cursor-pointer border-1 rounded-full p-[1.2px]
+                                        ${productType.color === color ? "border-gray-400" : "border-gray-200"}`}
+                                    onClick={() =>
+                                        handleProductType({
+                                            type: "color", value: color
+                                        })
+                                    }>
                                     <div className="w-[14px] h-[14px] rounded-full" style={{ backgroundColor: color }} />
                                 </div>
                             ))}
