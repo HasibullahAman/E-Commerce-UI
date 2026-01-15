@@ -12,7 +12,7 @@ const products: ProductsType = [
         description: "Classic fit cotton t-shirt designed for daily comfort and breathability.",
         price: 29.99,
         sizes: ["S", "M", "L", "XL", "XXL"],
-        colors: ["black", "white", "navy"],
+        colors: ["black", "red", "navy"],
         images: {
             black: "/products/1g.png",
             white: "/products/1p.png",
@@ -26,11 +26,11 @@ const products: ProductsType = [
         description: "Modern slim fit polo shirt suitable for casual and semi-formal wear.",
         price: 39.99,
         sizes: ["S", "M", "L", "XL"],
-        colors: ["blue", "gray", "white"],
+        colors: ["blue", "gray", "red"],
         images: {
             blue: "/products/2g.png",
             gray: "/products/2gr.png",
-            white: "/products/3/white.png",
+            red: "/products/2r.png",
         },
     },
     {
@@ -54,7 +54,7 @@ const products: ProductsType = [
         description: "Durable denim jacket with a classic cut and modern finish.",
         price: 79.99,
         sizes: ["S", "M", "L", "XL"],
-        colors: ["blue", "darkblue"],
+        colors: ["blue", "darkblue", "red"],
         images: {
             blue: "/products/4p.png",
             darkblue: "/products/4w.png",
@@ -94,14 +94,14 @@ const products: ProductsType = [
         description: "Long sleeve formal shirt ideal for office and special occasions.",
         price: 49.99,
         sizes: ["M", "L", "XL", "XXL"],
-        colors: ["white", "skyblue"],
+        colors: ["white", "black", "skyblue"],
         images: {
             white: "/products/7g.png",
             skyblue: "/products/7p.png",
         },
     },
     {
-        id: 8,
+        id: 8, 
         name: "Winter Wool Sweater",
         shortDescription: "Warm wool sweater",
         description: "High-quality wool sweater to keep you warm in cold weather.",
