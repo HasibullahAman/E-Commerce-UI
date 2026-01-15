@@ -18,7 +18,10 @@ const ProductCard = ({ product }: { product: ProductType }) => {
     const handleProductType = (
         { type, value }: { type: "size" | "color", value: string }
     ) => {
-
+        setProductType(prev => ({
+            ...prev,
+            [type]: value,
+        }));
     }
     return (
         <div className="shadow-lg rounded-lg overflow-hidden">
@@ -63,7 +66,7 @@ const ProductCard = ({ product }: { product: ProductType }) => {
                             )}
                         >
                             {product.sizes.map(size => (
-                                <option value={size}>
+                                <option key={size} value={size}>
                                     {size.toUpperCase()}
                                 </option>
                             ))}
