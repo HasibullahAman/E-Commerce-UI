@@ -1,0 +1,181 @@
+"use client"
+
+import { CartItemsType } from "@/type"
+import { ArrowRight } from "lucide-react"
+import { useRouter, useSearchParams } from "next/navigation"
+import { use } from "react"
+
+const steps = [
+    {
+        id: 1,
+        title: "Shopping Cart"
+    },
+    {
+        id: 2,
+        title: "Shipping Address"
+    },
+    {
+        id: 3,
+        title: "Payment Method"
+    }
+
+]
+
+
+// Temporary cart items data
+const cartItems: CartItemsType = [
+    {
+        id: 1,
+        name: "Classic Cotton T-Shirt",
+        shortDescription: "Soft everyday cotton tee",
+        description: "Classic fit cotton t-shirt designed for daily comfort and breathability.",
+        price: 29.99,
+        sizes: ["S", "M", "L", "XL", "XXL"],
+        colors: ["gray", "purple", "green"],
+        images: {
+            gray: "/products/1g.png",
+            purple: "/products/1p.png",
+            green: "/products/1gr.png",
+        },
+        quantity: 1,
+        selectedSize: "M",
+        selectedColor: "gray",
+    },
+    {
+        id: 2,
+        name: "Slim Fit Polo Shirt",
+        shortDescription: "Elegant slim fit polo",
+        description: "Modern slim fit polo shirt suitable for casual and semi-formal wear.",
+        price: 39.99,
+        sizes: ["S", "M", "L", "XL"],
+        colors: ["green", "gray"],
+        images: {
+            green: "/products/2g.png",
+            gray: "/products/2gr.png",
+        },
+        quantity: 1,
+        selectedSize: "L",
+        selectedColor: "gray",
+    },
+    {
+        id: 3,
+        name: "Hooded Sweatshirt",
+        shortDescription: "Warm and cozy hoodie",
+        description: "Comfortable hooded sweatshirt made with premium fleece fabric.",
+        price: 54.99,
+        sizes: ["M", "L", "XL", "XXL"],
+        colors: ["green", "blue", "black"],
+        images: {
+            green: "/products/3b.png",
+            blue: "/products/3bl.png",
+            black: "/products/3b.png",
+        },
+        quantity: 1,
+        selectedSize: "L",
+        selectedColor: "black",
+    },
+]
+
+
+const CartPage = () => {
+    const searchParams = useSearchParams();
+    const router = useRouter();
+
+    const activeStep = parseInt(searchParams.get("step") || "1");
+
+
+
+
+
+    return (
+        <div className="flex flex-col gap-8 items-center justify-center border-gray-100 p-8">
+            {/* Shopping Cart */}
+            <h1 className="text-2xl font-medium">
+                Your Shopping Cart
+            </h1>
+
+            {/* Steps */}
+            <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
+                {steps.map((step) => (
+                    <div
+                        key={step.id}
+                        className={`flex items-center gap-2 border-b-2 pb-4
+                                ${step.id === activeStep ? "border-gray-800" : "border-gray-200"}`}
+                    >
+                        <div
+                            className={`w-6 h-6 rounded-full text-white p-4 flex items-center justify-center
+                                    ${step.id === activeStep ? "bg-gray-800" : "bg-gray-400"}`}
+
+                        >
+
+                            {step.id}
+                        </div>
+                        <p
+                            className={`text-sm font-medium 
+                            ${step.id === activeStep ? "text-gray-800" : "text-gray-400"}`}
+                        >
+                            {step.title}
+                        </p>
+                    </div>
+                ))}
+            </div>
+
+
+            {/* Step & Details */}
+            <div className="w-full flex flex-col lg:flex-row gap-16">
+                {/* Steps */}
+                <div className="w-full lg:w-7/12 shadow-lg border-1 border-gray-100 p-8 rounded-lg flex flex-col gap-8">
+                    1
+                </div>
+                {/* Details */}
+                <div className="w-full lg:w-5/12 shadow-lg border-1 border-gray-100 p-8 rounded-lg flex flex-col gap-8">
+                    <h2 className="font-semibold">
+                        Cart Details
+                    </h2>
+                    <div className="flex flex-col gap-4">
+                        <div className="flex justify-between text-sm">
+                            <p className="text-gray-500">Subtotal</p>
+                            <p className="font-medium">
+                                ${cartItems.reduce((acc, item) =>
+                                    acc + item.price * item.quantity, 0).toFixed(2)
+                                }
+                            </p>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                            <p className="text-gray-500">Discount (10%)</p>
+                            <p className="font-medium">
+                                $10
+                            </p>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                            <p className="text-gray-500">Shiping Fee</p>
+                            <p className="font-medium">
+                                $10
+                            </p>
+                        </div>
+                        <hr className="border-gray-200" />
+                        <div className="flex justify-between">
+                            <p className="text-gray-800 font-semibold">Total</p>
+                            <p className="font-medium">
+                                ${cartItems.reduce((acc, item) =>
+                                    acc + item.price * item.quantity, 0).toFixed(2)
+                                }
+                            </p>
+                        </div>
+                    </div>
+
+                    {activeStep === 1 && <button
+                        className="w-full bg-gray-800 text-white p-2 rounded-lg cursor-pointer
+                        flex items-center justify-center gap-2
+                        hover:bg-gray-900 transition-all duration-300"
+                        onClick={() => router.push("/cart?step=2", { scroll: false })}>
+                        Continue
+                        <ArrowRight className="w-3 h-3" />
+                    </button>}
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export default CartPage
