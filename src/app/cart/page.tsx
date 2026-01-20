@@ -155,33 +155,6 @@ const CartPage = () => {
                             </div>
                         )
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     ) : activeStep === 2 ? <ShippingForm /> :
                         activeStep === 3 && shippingForm ? (
                             <PaymentForm />
