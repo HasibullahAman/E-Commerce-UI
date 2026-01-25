@@ -93,7 +93,6 @@ const CartPage = () => {
             <h1 className="text-2xl font-medium">
                 Your Shopping Cart
             </h1>
-
             {/* Steps */}
             <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
                 {steps.map((step) => (
@@ -155,7 +154,7 @@ const CartPage = () => {
                             </div>
                         )
 
-                    ) : activeStep === 2 ? <ShippingForm /> :
+                    ) : activeStep === 2 ? <ShippingForm setShippingForm={setShippingForm} /> :
                         activeStep === 3 && shippingForm ? (
                             <PaymentForm />
                         ) : (
