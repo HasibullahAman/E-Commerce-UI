@@ -6,20 +6,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 
-const ShippingForm = (
-    { setShippingForm }: { setShippingForm: (data: ShippingFormInputs) => void }) => {
+const ShippingForm = () => {
     const { register, handleSubmit, formState: { errors }, }
         = useForm<ShippingFormInputs>({ resolver: zodResolver(shippingFormSchema) })
 
     const router = useRouter();
 
-    const handleShippingForm: SubmitHandler<ShippingFormInputs> = (data) => {
-        setShippingForm(data);
-        router.push('/cart/?step=3', { scroll: false });
+    const handlePaymentForm: SubmitHandler<ShippingFormInputs> = (data) => {
     }
 
     return (
-        <form className="flex flex-col gap-4" onSubmit={handleSubmit(handleShippingForm)}>
+        <form className="flex flex-col gap-4" onSubmit={handleSubmit(handlePaymentForm)}>
             <div className="flex flex-col gap-1">
                 <label htmlFor="name">Name</label>
                 <input
@@ -87,4 +84,4 @@ const ShippingForm = (
     )
 }
 
-export default ShippingForm
+export default PaymentForm;
