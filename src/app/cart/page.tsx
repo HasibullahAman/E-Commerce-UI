@@ -2,7 +2,8 @@
 
 import PaymentForm from "@/components/PaymentForm"
 import ShippingForm from "@/components/ShippingForm"
-import { CartItemsType } from "@/type"
+import useCartStore from "@/stores/cartStore"
+import { CartItemsType, ShippingFormInputs } from "@/type"
 import { AlertTriangle, ArrowRight, Trash2 } from "lucide-react"
 import Image from "next/image"
 import { useRouter, useSearchParams } from "next/navigation"
@@ -26,65 +27,68 @@ const steps = [
 
 
 // Temporary cart items data
-const cartItems: CartItemsType = [
-    {
-        id: 1,
-        name: "Classic Cotton T-Shirt",
-        shortDescription: "Soft everyday cotton tee",
-        description: "Classic fit cotton t-shirt designed for daily comfort and breathability.",
-        price: 29.99,
-        sizes: ["S", "M", "L", "XL", "XXL"],
-        colors: ["gray", "purple", "green"],
-        images: {
-            gray: "/products/1g.png",
-            purple: "/products/1p.png",
-            green: "/products/1gr.png",
-        },
-        quantity: 1,
-        selectedSize: "M",
-        selectedColor: "gray",
-    },
-    {
-        id: 2,
-        name: "Slim Fit Polo Shirt",
-        shortDescription: "Elegant slim fit polo",
-        description: "Modern slim fit polo shirt suitable for casual and semi-formal wear.",
-        price: 39.99,
-        sizes: ["S", "M", "L", "XL"],
-        colors: ["green", "gray"],
-        images: {
-            green: "/products/2g.png",
-            gray: "/products/2gr.png",
-        },
-        quantity: 1,
-        selectedSize: "L",
-        selectedColor: "gray",
-    },
-    {
-        id: 3,
-        name: "Hooded Sweatshirt",
-        shortDescription: "Warm and cozy hoodie",
-        description: "Comfortable hooded sweatshirt made with premium fleece fabric.",
-        price: 54.99,
-        sizes: ["M", "L", "XL", "XXL"],
-        colors: ["green", "blue", "black"],
-        images: {
-            green: "/products/3b.png",
-            blue: "/products/3bl.png",
-            black: "/products/3b.png",
-        },
-        quantity: 1,
-        selectedSize: "L",
-        selectedColor: "black",
-    },
-]
+// const cartItems: CartItemsType = [
+//     {
+//         id: 1,
+//         name: "Classic Cotton T-Shirt",
+//         shortDescription: "Soft everyday cotton tee",
+//         description: "Classic fit cotton t-shirt designed for daily comfort and breathability.",
+//         price: 29.99,
+//         sizes: ["S", "M", "L", "XL", "XXL"],
+//         colors: ["gray", "purple", "green"],
+//         images: {
+//             gray: "/products/1g.png",
+//             purple: "/products/1p.png",
+//             green: "/products/1gr.png",
+//         },
+//         quantity: 1,
+//         selectedSize: "M",
+//         selectedColor: "gray",
+//     },
+//     {
+//         id: 2,
+//         name: "Slim Fit Polo Shirt",
+//         shortDescription: "Elegant slim fit polo",
+//         description: "Modern slim fit polo shirt suitable for casual and semi-formal wear.",
+//         price: 39.99,
+//         sizes: ["S", "M", "L", "XL"],
+//         colors: ["green", "gray"],
+//         images: {
+//             green: "/products/2g.png",
+//             gray: "/products/2gr.png",
+//         },
+//         quantity: 1,
+//         selectedSize: "L",
+//         selectedColor: "gray",
+//     },
+//     {
+//         id: 3,
+//         name: "Hooded Sweatshirt",
+//         shortDescription: "Warm and cozy hoodie",
+//         description: "Comfortable hooded sweatshirt made with premium fleece fabric.",
+//         price: 54.99,
+//         sizes: ["M", "L", "XL", "XXL"],
+//         colors: ["green", "blue", "black"],
+//         images: {
+//             green: "/products/3b.png",
+//             blue: "/products/3bl.png",
+//             black: "/products/3b.png",
+//         },
+//         quantity: 1,
+//         selectedSize: "L",
+//         selectedColor: "black",
+//     },
+// ]
 
 
 const CartPage = () => {
     const searchParams = useSearchParams();
     const router = useRouter();
-    const [shippingForm, setShippingForm] = useState(null);
+    const [shippingForm, setShippingForm] = useState<ShippingFormInputs>();
     const activeStep = parseInt(searchParams.get("step") || "1");
+
+
+    const { cart, removeFromCart } = useCartStore();
 
 
     return (
@@ -118,9 +122,9 @@ const CartPage = () => {
                 {/* Steps */}
                 <div className="w-full lg:w-7/12 shadow-lg border-1 border-gray-100 p-8 rounded-lg flex flex-col gap-8">
                     {activeStep === 1 ? (
-                        cartItems.map((item) =>
+                        cart.map((item) =>
                             // Single Cart Item
-                            <div className="flex items-center justify-between" key={item.id}>
+                            <div className="flex items-center justify-between" key={item.id + item.selectedColor + item.selectedSize}>
                                 {/* Image and details */}
                                 <div className="flex gap-8">
                                     {/* Image */}
@@ -146,7 +150,7 @@ const CartPage = () => {
 
 
                                 {/* Delete Button */}
-                                <button className="w-8 h-8 rounded-full bg-red-100 text-read-400
+                                <button onClick={() => removeFromCart(item)} className="w-8 h-8 rounded-full bg-red-100 text-read-400
                                 flex items-center justify-center cursor-pointer
                                 hover:bg-read-200 transition-all duration-300" >
                                     <Trash2 className="w-3 h-3" />
@@ -172,7 +176,7 @@ const CartPage = () => {
                         <div className="flex justify-between text-sm">
                             <p className="text-gray-500">Subtotal</p>
                             <p className="font-medium">
-                                ${cartItems.reduce((acc, item) =>
+                                ${cart.reduce((acc, item) =>
                                     acc + item.price * item.quantity, 0).toFixed(2)
                                 }
                             </p>
@@ -189,7 +193,7 @@ const CartPage = () => {
                         <div className="flex justify-between">
                             <p className="text-gray-800 font-semibold">Total</p>
                             <p className="font-medium">
-                                ${cartItems.reduce((acc, item) =>
+                                ${cart.reduce((acc, item) =>
                                     acc + item.price * item.quantity, 0).toFixed(2)}
                             </p>
                         </div>
